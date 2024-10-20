@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './App.css';
-import SettingsIcon from './SettingsIcon';
+import MenuButton from './MenuButton';
 
 function App() {
   const [time, setTime] = useState(1500); // 25 minutes in seconds
@@ -16,15 +16,14 @@ function App() {
     breakDuration: 5,
   });
   const [progress, setProgress] = useState(0);
-  const [showSettings, setShowSettings] = useState(false);
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
-  const timerRef = useRef(null);
   const [gradientPosition, setGradientPosition] = useState({ left: 0, top: 0 });
   const [activePage, setActivePage] = useState('pomodoro');
   const [isBursting, setIsBursting] = useState(false);
   const [isExpanding, setIsExpanding] = useState(false);
   const [showGradient, setShowGradient] = useState(true);
   const [currentTask, setCurrentTask] = useState('');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
 
   const logSession = useCallback(() => {
     const now = new Date();
@@ -83,7 +82,7 @@ function App() {
       setTimeout(() => {
         setIsExpanding(false);
         setShowGradient(false);
-      }, 8000); // Changed from 5000 to 8000 to match the new animation duration
+      }, 8000);
     } else {
       setShowGradient(true);
     }
@@ -95,7 +94,7 @@ function App() {
     setIsBreak(false);
     setIsTimerRunning(false);
     setShowGradient(true);
-    setIsExpanding(false); // Add this line to ensure the gradient is not in expanding state
+    setIsExpanding(false);
   };
 
   const formatTime = (seconds) => {
@@ -112,25 +111,17 @@ function App() {
     }));
   };
 
-  const toggleSettings = () => {
-    setShowSettings(!showSettings);
-    setTempSettings({ ...settings });
-  };
-
-  const applySettings = () => {
-    setSettings(tempSettings);
-    if (!isActive) {
-      if (isBreak) {
-        setTime(tempSettings.breakDuration * 60);
-      } else {
-        setTime(tempSettings.pomodoroDuration * 60);
-      }
-    }
-    toggleSettings();
-  };
-
   const handleTaskChange = (e) => {
     setCurrentTask(e.target.value);
+  };
+
+  const navigateTo = (page) => {
+    setActivePage(page);
+    setIsMenuOpen(false);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   const renderContent = () => {
@@ -175,36 +166,9 @@ function App() {
             <p>This page is under construction.</p>
           </div>
         );
-      default:
-        return null;
-    }
-  };
-
-  return (
-    <div className={`App ${activePage}`}>
-      <header className="app-header">
-        <nav className="menu-bar">
-          <button 
-            className={`menu-item ${activePage === 'pomodoro' ? 'active' : ''}`}
-            onClick={() => setActivePage('pomodoro')}
-          >
-            Pomodoro
-          </button>
-          <button 
-            className={`menu-item ${activePage === 'statistics' ? 'active' : ''}`}
-            onClick={() => setActivePage('statistics')}
-          >
-            Statistics
-          </button>
-        </nav>
-      </header>
-      {renderContent()}
-      <button className="settings-button" onClick={toggleSettings}>
-        <SettingsIcon size={28} />
-      </button>
-      {showSettings && (
-        <div className="settings-overlay">
-          <div className="settings-popup">
+      case 'settings':
+        return (
+          <div className="settings-container">
             <h2>Settings</h2>
             <label>
               Pomodoro Duration (minutes):
@@ -227,12 +191,30 @@ function App() {
               />
             </label>
             <div className="settings-buttons">
-              <button onClick={applySettings}>Apply</button>
-              <button onClick={toggleSettings}>Close</button>
+              <button onClick={() => setSettings(tempSettings)}>Apply</button>
+              <button onClick={() => navigateTo('pomodoro')}>Back to Timer</button>
             </div>
           </div>
-        </div>
-      )}
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className={`App ${activePage}`}>
+      <header>
+        <MenuButton isOpen={isMenuOpen} onClick={toggleMenu} />
+        <h1 className="app-title">POMOTRACKR</h1>
+      </header>
+      <div className={`slide-menu ${isMenuOpen ? 'open' : ''}`}>
+        <nav>
+          <button onClick={() => navigateTo('pomodoro')}>Pomodoro</button>
+          <button onClick={() => navigateTo('statistics')}>Statistics</button>
+          <button onClick={() => navigateTo('settings')}>Settings</button>
+        </nav>
+      </div>
+      {renderContent()}
     </div>
   );
 }

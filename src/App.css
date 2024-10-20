@@ -235,24 +235,24 @@ button {
   font-family: 'Clash Grotesk', sans-serif;
   font-size: 20px;
   padding: 15px 30px;
-  border: none; /* Remove border */
-  border-radius: 8px; /* Slightly rounded corners */
+  border: none;
+  border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.2);
   color: #FFFDD0; /* Cream */
   cursor: pointer;
   transition: all 0.2s ease;
   margin: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  /* Removed box-shadow */
 }
 
 button:hover {
   background-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow on hover */
+  /* Removed box-shadow on hover */
 }
 
 button:active {
   transform: translateY(1px);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Reduced shadow when pressed */
+  /* Removed box-shadow when pressed */
 }
 
 .pomodoro-count {
@@ -411,13 +411,14 @@ button:active {
 
 .app-title {
   position: fixed;
-  top: 20px;
-  left: 20px;
+  top: 20px; /* Align with the menu button vertically */
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 24px;
   font-weight: bold;
   color: #FFFDD0;
   margin: 0;
-  z-index: 10;
+  z-index: 1000;
 }
 
 .timer-container {
@@ -638,6 +639,7 @@ button, input, .session-type, .pomodoro-count, .settings h2, .settings label, .m
   align-items: center;
   width: 100%;
   max-width: 600px;
+  margin-top: 0; /* Remove top margin */
 }
 
 .timer-container {
@@ -649,7 +651,8 @@ button, input, .session-type, .pomodoro-count, .settings h2, .settings label, .m
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
-  margin-bottom: 20px; /* Add space between timer and input */
+  margin-bottom: 20px;
+  margin-top: 0; /* Remove top margin */
 }
 
 .task-input {
@@ -672,3 +675,114 @@ button, input, .session-type, .pomodoro-count, .settings h2, .settings label, .m
   outline: none;
   background: rgba(255, 255, 255, 0.15);
 }
+
+.menu-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+  padding: 0;
+}
+
+.menu-button .line {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: #FFFDD0;
+  margin: 6px auto;
+  transition: all 0.3s ease-in-out;
+}
+
+.menu-button:hover .line {
+  background-color: #FFA500; /* Change to orange on hover */
+}
+
+.menu-button.open .line-1 {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.menu-button.open .line-2 {
+  opacity: 0;
+}
+
+.menu-button.open .line-3 {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Remove any hover styles that might be adding a background */
+.menu-button:hover {
+  background: none;
+}
+
+.slide-menu {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 300px;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: left 0.3s ease;
+  z-index: 999;
+}
+
+.slide-menu.open {
+  left: 0;
+}
+
+.slide-menu nav {
+  display: flex;
+  flex-direction: column;
+  padding: 80px 30px; /* Increased padding */
+}
+
+.slide-menu button {
+  background: none;
+  border: none;
+  color: #FFFDD0;
+  font-size: 24px;
+  margin-bottom: 30px; /* Increased margin between buttons */
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease;
+  position: relative;
+  padding: 10px 0; /* Increased padding */
+}
+
+.slide-menu button::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #FFA500;
+  transition: width 0.3s ease;
+}
+
+.slide-menu button:hover {
+  color: #FFA500;
+  transform: translateX(10px); /* Added slight movement on hover */
+}
+
+.slide-menu button:hover::after {
+  width: 100%;
+}
+
+/* Remove the scale effect for a more subtle interaction */
+.slide-menu button:hover {
+  transform: translateX(10px);
+}
+
+/* Adjust the top margin of the content to accommodate the title */
+.pomodoro-container,
+.statistics-container,
+.settings-container {
+  margin-top: 60px;
+}
+
