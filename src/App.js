@@ -1,8 +1,15 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
+import { Amplify } from 'aws-amplify';
+import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
+import awsExports from './aws-exports';
 import './App.css';
 import MenuButton from './MenuButton';
+import LoginPage from './LoginPage';
 
-function App() {
+Amplify.configure(awsExports);
+
+function AppContent() {
   const [time, setTime] = useState(1500); // 25 minutes in seconds
   const [isActive, setIsActive] = useState(false);
   const [isBreak, setIsBreak] = useState(false);
@@ -25,6 +32,9 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
+  const { signOut, user } = useAuthenticator((context) => [context.user]);
+  const navigate = useNavigate();
+
   const logSession = useCallback(() => {
     const now = new Date();
     const session = {
@@ -36,6 +46,12 @@ function App() {
     localStorage.setItem('sessions', JSON.stringify(sessions));
     localStorage.setItem('pomodoroCount', pomodoroCount + 1);
   }, [settings.pomodoroDuration, pomodoroCount]);
+
+  const handleSignOut = () => {
+    signOut();
+    setIsMenuOpen(false);
+    navigate('/login');
+  };
 
   useEffect(() => {
     let interval = null;
@@ -212,10 +228,44 @@ function App() {
           <button onClick={() => navigateTo('pomodoro')}>Pomodoro</button>
           <button onClick={() => navigateTo('statistics')}>Statistics</button>
           <button onClick={() => navigateTo('settings')}>Settings</button>
+          <div className="menu-spacer"></div>
+          <button onClick={handleSignOut} className="sign-out-button">Sign Out</button>
         </nav>
       </div>
-      {renderContent()}
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/"
+          element={
+            <RequireAuth>
+              {renderContent()}
+            </RequireAuth>
+          }
+        />
+      </Routes>
     </div>
+  );
+}
+
+function RequireAuth({ children }) {
+  const { route } = useAuthenticator((context) => [context.route]);
+  if (route !== 'authenticated') {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+}
+
+function App() {
+  return (
+    <Router>
+      <Authenticator.Provider>
+        <Authenticator>
+          {({ signOut, user }) => (
+            <AppContent />
+          )}
+        </Authenticator>
+      </Authenticator.Provider>
+    </Router>
   );
 }
 

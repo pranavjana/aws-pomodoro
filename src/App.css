@@ -725,10 +725,11 @@ button, input, .session-type, .pomodoro-count, .settings h2, .settings label, .m
   left: -300px;
   width: 300px;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(7, 28, 57, 0.95); /* Darker, semi-transparent background */
   backdrop-filter: blur(10px);
   transition: left 0.3s ease;
   z-index: 999;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .slide-menu.open {
@@ -738,45 +739,68 @@ button, input, .session-type, .pomodoro-count, .settings h2, .settings label, .m
 .slide-menu nav {
   display: flex;
   flex-direction: column;
-  padding: 80px 30px; /* Increased padding */
+  height: 100%;
+  padding: 60px 0 20px; /* Add top padding to account for the header */
 }
 
 .slide-menu button {
   background: none;
   border: none;
   color: #FFFDD0;
-  font-size: 24px;
-  margin-bottom: 30px; /* Increased margin between buttons */
+  font-size: 18px;
+  padding: 15px 30px;
   text-align: left;
+  transition: background-color 0.2s, color 0.2s;
   cursor: pointer;
-  transition: color 0.3s ease, transform 0.3s ease;
   position: relative;
-  padding: 10px 0; /* Increased padding */
+  overflow: hidden;
 }
 
-.slide-menu button::after {
+.slide-menu button::before {
   content: '';
   position: absolute;
-  bottom: 0;
   left: 0;
-  width: 0;
+  bottom: 0;
   height: 2px;
+  width: 0;
   background-color: #FFA500;
   transition: width 0.3s ease;
 }
 
 .slide-menu button:hover {
+  background-color: rgba(255, 255, 255, 0.05);
   color: #FFA500;
-  transform: translateX(10px); /* Added slight movement on hover */
 }
 
-.slide-menu button:hover::after {
+.slide-menu button:hover::before {
   width: 100%;
 }
 
-/* Remove the scale effect for a more subtle interaction */
+/* Remove the translation effect */
 .slide-menu button:hover {
-  transform: translateX(10px);
+  transform: none;
+}
+
+.menu-spacer {
+  flex-grow: 1;
+}
+
+.sign-out-button {
+  margin-top: auto;
+  background-color: transparent !important;
+  color: #f44336 !important;
+  border: 1px solid #f44336 !important;
+  padding: 10px 20px !important;
+  transition: background-color 0.3s, color 0.3s !important;
+}
+
+.sign-out-button:hover {
+  background-color: rgba(244, 67, 54, 0.1) !important;
+  color: #ff6b6b !important;
+}
+
+.sign-out-button::before {
+  display: none;
 }
 
 /* Adjust the top margin of the content to accommodate the title */

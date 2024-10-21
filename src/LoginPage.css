@@ -1,0 +1,37 @@
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.amplify-authenticator {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.amplify-button[data-variation='primary'] {
+  background-color: #4CAF50;
+}
+
+.amplify-button[data-variation='primary']:hover {
+  background-color: #45a049;
+}
+
+.amplify-tabs {
+  border-bottom: none;
+}
+
+.amplify-tabs-item[data-state='active'] {
+  border-bottom-color: #4CAF50;
+}
+
+.amplify-field__show-password {
+  color: #4CAF50;
+}
+
+.amplify-field__show-password:hover {
+  color: #45a049;
+}

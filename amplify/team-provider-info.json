@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pomo-dev-b5574-authRole",
+      "UnauthRoleArn": "arn:aws:iam::761018879083:role/amplify-pomo-dev-b5574-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::761018879083:role/amplify-pomo-dev-b5574-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-pomo-dev-b5574-deployment",
+      "UnauthRoleName": "amplify-pomo-dev-b5574-unauthRole",
+      "StackName": "amplify-pomo-dev-b5574",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:761018879083:stack/amplify-pomo-dev-b5574/f98eaa30-8f8a-11ef-869f-0a766175f985",
+      "AmplifyAppId": "d3l1fyp81d7ihp"
+    },
+    "categories": {
+      "auth": {
+        "pomo0d5d94f6": {}
+      }
+    }
+  }
+}
