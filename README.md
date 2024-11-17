@@ -21,11 +21,11 @@ To run this app locally:
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/pomodoro-timer-app.git
+   git clone https://github.com/pranavjana/aws-pomodoro.git
    ```
 2. Navigate into the project directory:
    ```bash
-   cd pomodoro-timer-app
+   cd aws-pomodoro
    ```
 3. Install the dependencies:
    ```bash
