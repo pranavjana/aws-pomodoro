@@ -65,5 +65,4 @@ This project aims to:
 
 Feel free to reach out or check out my other projects:
 
-- **GitHub**: [https://github.com/yourusername](https://github.com/yourusername)
-- **Twitter**: [@yourhandle](https://twitter.com/yourhandle)
+- **GitHub**: [https://github.com/yourusername](https://github.com/pranavjana)
