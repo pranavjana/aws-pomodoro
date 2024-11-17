@@ -52,6 +52,8 @@ This project aims to:
 - **Task Management**: Integrate a simple task management system to help track what users are working on.
 
 ## Screenshots
+![image](https://github.com/user-attachments/assets/cf7c58e2-bcd7-4adb-80f2-44d02164923b)
+
 
 
 ## Acknowledgments
